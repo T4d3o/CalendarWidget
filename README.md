@@ -2,6 +2,13 @@ Original
 ========
 https://github.com/5amfung/CalendarWidget
 
+Modifications
+=============
+
+Add es locale.
+Add option to highlight weekends ( 0, 1 or 2 days)
+
+
 CalendarWidget
 ==============
 
