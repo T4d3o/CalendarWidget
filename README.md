@@ -5,6 +5,8 @@ https://github.com/5amfung/CalendarWidget
 Modifications
 =============
 
+* Added locale "es".
+* Added weekend highlight (0, 1 or 2 days)
 
 CalendarWidget
 ==============
