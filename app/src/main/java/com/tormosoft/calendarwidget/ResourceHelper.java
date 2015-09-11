@@ -14,16 +14,32 @@ public class ResourceHelper {
         return theme == LIGHT_THEME ? R.layout.cell_today_light : R.layout.cell_today_dark;
     }
 
+    public static int layoutCellTodayEv(int theme) {
+        return theme == LIGHT_THEME ? R.layout.cell_today_event_light : R.layout.cell_today_event_dark;
+    }
+
     public static int layoutCellTodayWeekEnd(int theme) {
         return theme == LIGHT_THEME ? R.layout.cell_today_weekend_light : R.layout.cell_today_weekend_dark;
+    }
+
+    public static int layoutCellTodayWeekEndEv(int theme) {
+        return theme == LIGHT_THEME ? R.layout.cell_today_weekend_event_light : R.layout.cell_today_weekend_event_dark;
     }
 
     public static int layoutCellInMonth(int theme) {
         return theme == LIGHT_THEME ? R.layout.cell_in_month_light : R.layout.cell_in_month_dark;
     }
 
+    public static int layoutCellInMonthEv(int theme) {
+        return theme == LIGHT_THEME ? R.layout.cell_in_month_event_light : R.layout.cell_in_month_event_dark;
+    }
+
     public static int layoutCellInMonthWeekEnd(int theme) {
         return theme == LIGHT_THEME ? R.layout.cell_in_month_weekend_light : R.layout.cell_in_month_weekend_dark;
+    }
+
+    public static int layoutCellInMonthWeekEndEv(int theme) {
+        return theme == LIGHT_THEME ? R.layout.cell_in_month_weekend_event_light : R.layout.cell_in_month_weekend_event_dark;
     }
 
     public static int layoutWidget(int theme) {

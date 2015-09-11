@@ -46,7 +46,7 @@
             android:persistent="false">
             <intent 
                 android:action="android.intent.action.VIEW"
-                android:data="https://raw.github.com/5amfung/CalendarWidget/master/LICENSE" />
+                android:data="https://raw.github.com/T4d3o/CalendarWidget/master/LICENSE" />
         </Preference>
         
         <Preference
@@ -55,7 +55,7 @@
             android:persistent="false">
             <intent 
                 android:action="android.intent.action.VIEW"
-                android:data="https://github.com/5amfung/CalendarWidget" />
+                android:data="https://github.com/T4d3o/CalendarWidget" />
         </Preference>
         
         

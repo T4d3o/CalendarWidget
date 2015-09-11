@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import android.provider.CalendarContract;
 import android.provider.CalendarContract.Events;
 import android.text.format.DateFormat;
 import android.widget.RemoteViews;
+import android.widget.Toast;
 
 import java.util.Calendar;
 import java.util.List;
@@ -117,7 +119,7 @@ public class CalendarWidgetProvider extends AppWidgetProvider {
                 // View calendar
                 Calendar cal = Calendar.getInstance();
                 cal.set(intent.getIntExtra(EXTRA_YEAR, -1), intent.getIntExtra(EXTRA_MONTH, -1),
-                        intent.getIntExtra(EXTRA_DATE, -1));
+                        intent.getIntExtra(EXTRA_DATE, -1), 8, 0, 0);
                 Uri.Builder builder = CalendarContract.CONTENT_URI.buildUpon();
                 builder.appendPath("time");
                 ContentUris.appendId(builder, cal.getTimeInMillis());
@@ -175,7 +177,7 @@ public class CalendarWidgetProvider extends AppWidgetProvider {
         return PREFERENCE_FILE + appWidgetId;
     }
 
-    private int getTheme(Context context) {
+    public static int getTheme(Context context) {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
         return Integer.parseInt(pref.getString(SettingsFragment.PREF_THEME, "0"));
     }
@@ -191,14 +193,12 @@ public class CalendarWidgetProvider extends AppWidgetProvider {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
         String s = pref.getString(SettingsFragment.PREF_WEEKEND_HIGHLIGHT, "0");
         return Integer.parseInt(s);
-
     }
 
     private int getOnDateClickAction(Context context) {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
         String s = pref.getString(SettingsFragment.PREF_ON_DAY_CLICK, "0");
         return Integer.parseInt(s);
-
     }
 
     private void render(Context context, int appWidgetId, int theme, int weekStartDay, int weekendHighlight) {
@@ -235,6 +235,7 @@ public class CalendarWidgetProvider extends AppWidgetProvider {
                 int date = cal.get(Calendar.DATE);
                 int month = cal.get(Calendar.MONTH);
                 int year = cal.get(Calendar.YEAR);
+                long epoch = CalendarHelper.cleanEpoch(cal.getTimeInMillis());
 
                 boolean isWithinMonth = month == selectedMonth;
                 boolean isToday = date == todayDate && month == todayMonth && year == todayYear;
@@ -242,15 +243,31 @@ public class CalendarWidgetProvider extends AppWidgetProvider {
                 int layoutId = ResourceHelper.layoutCellDay(theme);
                 if (isToday && isWithinMonth) {
                     if (j < 7 - weekendHighlight) {
-                        layoutId = ResourceHelper.layoutCellToday(theme);
+                        if (CalendarHelper.getEventsT(context, epoch)) {
+                            layoutId = ResourceHelper.layoutCellTodayEv(theme);
+                        } else {
+                            layoutId = ResourceHelper.layoutCellToday(theme);
+                        }
                     } else {
-                        layoutId = ResourceHelper.layoutCellTodayWeekEnd(theme);
+                        if (CalendarHelper.getEventsT(context, epoch)) {
+                            layoutId = ResourceHelper.layoutCellTodayWeekEndEv(theme);
+                        } else {
+                            layoutId = ResourceHelper.layoutCellTodayWeekEnd(theme);
+                        }
                     }
                 } else if (isWithinMonth) {
                     if( j < 7 - weekendHighlight) {
-                        layoutId = ResourceHelper.layoutCellInMonth(theme);
+                        if (CalendarHelper.getEventsT(context, epoch)) {
+                            layoutId = ResourceHelper.layoutCellInMonthEv(theme);
+                        } else {
+                            layoutId = ResourceHelper.layoutCellInMonth(theme);
+                        }
                     } else {
-                        layoutId = ResourceHelper.layoutCellInMonthWeekEnd(theme);
+                        if (CalendarHelper.getEventsT(context, epoch)) {
+                            layoutId = ResourceHelper.layoutCellInMonthWeekEndEv(theme);
+                        } else {
+                            layoutId = ResourceHelper.layoutCellInMonthWeekEnd(theme);
+                        }
                     }
                 }
 
