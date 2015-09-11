@@ -5,6 +5,9 @@ https://github.com/5amfung/CalendarWidget
 Modifications
 =============
 
+* Change proyect to Android Studio.
+* Added locale "es".
+* Added weekend highlight (0, 1 or 2 days)
 
 CalendarWidget
 ==============
